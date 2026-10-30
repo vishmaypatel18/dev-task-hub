@@ -1,0 +1,74 @@
+========================================================================
+DEV_TASK_HUB: STEP-BY-STEP GIT & GITHUB COMMAND EXECUTION GUIDE
+========================================================================
+
+PHASE 1: LOCAL GIT INITIALIZATION & SSH AUTHENTICATION
+------------------------------------------------------------------------
+1. Set Global Git Credentials:
+   git config --global user.name "Your Name"
+   git config --global user.email "your_email@gmail.com"
+
+2. Generate SSH Key & Test Connection:
+   ssh-keygen -t ed25519 -C "your_email@gmail.com"
+   ssh -T git@github.com
+
+3. Initialize Repository & Push Initial Files:
+   mkdir dev-task-hub && cd dev-task-hub
+   git init -b main
+   # Copy all 7 extracted files into this dev-task-hub directory
+   git add README.md .gitignore
+   git commit -m "chore: initial commit with README and gitignore"
+   git remote add origin git@github.com:YOUR_USERNAME/dev-task-hub.git
+   git push -u origin main
+
+
+PHASE 2: FEATURE BRANCHING & MERGE CONFLICT RESOLUTION
+------------------------------------------------------------------------
+1. Create and Switch to Feature Branch:
+   git checkout -b feature/app-ui
+
+2. Add Application & Test Files:
+   git add index.html test.js .gitlab-ci.yml .github/
+   git commit -m "feat: add DevTask Hub UI, unit test, and CI workflow"
+   git push -u origin feature/app-ui
+
+3. Simulate Merge Conflict:
+   git checkout main
+   # Edit README.md status line on main branch
+   git commit -am "docs: update status on main"
+   git push origin main
+
+   git checkout feature/app-ui
+   # Edit same line in README.md on feature branch
+   git commit -am "docs: update status on feature branch"
+
+4. Merge main into Feature Branch & Resolve Conflict:
+   git merge main
+   # Open README.md, resolve conflict markers (<<<<<<< / ======= / >>>>>>>)
+   git add README.md
+   git commit -m "merge: resolve README conflict with main"
+   git push origin feature/app-ui
+
+
+PHASE 3: ISSUES, PULL REQUEST & TAG RELEASE
+------------------------------------------------------------------------
+1. On GitHub Web Interface:
+   - Create Milestone: "Sprint 1"
+   - Create Issue #1: "Build DevTask Hub UI"
+   - Create Issue #2: "Add unit tests"
+   - Create Issue #3: "Set up CI/CD pipeline"
+   - Open Pull Request from feature/app-ui into main (Closes #1, #2, #3)
+   - Merge Pull Request into main
+
+2. Tag Official Software Release locally:
+   git checkout main
+   git pull origin main
+   git tag -a v1.0.0 -m "Official Release v1.0.0"
+   git push origin v1.0.0
+
+
+PHASE 4: AUTOMATED CI/CD PIPELINE VERIFICATION
+------------------------------------------------------------------------
+1. Check GitHub Actions or GitLab CI Pipeline tab on web interface.
+2. Verify that both build and test jobs pass successfully.
+========================================================================
